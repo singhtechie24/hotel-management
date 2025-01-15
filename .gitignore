@@ -1,0 +1,50 @@
+node_modules
+.env
+android
+supabase
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# npm package logs
+*.log
+
+# Environment files
+.env*
+.env.local
+
+# IDE specific
+.vscode/
+.idea/
+
+# Temp files
+*.tmp
+*.swp
+*~
+
+# Metro bundler
+.cache/
+react-native-packager-cache-*/
+
+# Build directories
+web-build/
+dist/
+build/
+.expo/web-build/
+
+# Bundler cache
+.babelcache/
+.bundle/
+
+# Expo credentials (keep this safe)
+*.p8
+*.pem
+*.cer
+*.mobileprovision

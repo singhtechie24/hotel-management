@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "hotel-management-app",
+    "slug": "hotel-management-app",
+    "version": "1.0.0",
+    "sdkVersion": "50.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0d17d25c-adb7-4c90-88c9-01295ac7af8e"
+      }
+    },
+    "android": {
+      "package": "com.tarinxyz.hotelmanagementapp"
+    }
+  }
+}
