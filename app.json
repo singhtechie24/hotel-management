@@ -12,6 +12,19 @@
     },
     "android": {
       "package": "com.tarinxyz.hotelmanagementapp"
+    },
+    "developer": {
+      "console": {
+        "disableYellowBox": true,
+        "ignoredWarnings": ["Warning: ", "Require cycle:"]
+      }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "./scripts/remove-console-logs.js"
+        }
+      ]
     }
   }
 }
