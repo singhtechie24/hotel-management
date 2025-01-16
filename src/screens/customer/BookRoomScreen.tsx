@@ -26,6 +26,8 @@ export const BookRoomScreen = ({ route, navigation }: any) => {
     }),
   };
 
+  //stripe integration
+
   const handlePayment = () => {
     if (cardNumber.length !== 16) {
       Alert.alert("Error", "Invalid card number");
@@ -52,6 +54,8 @@ export const BookRoomScreen = ({ route, navigation }: any) => {
         room_id: room.id,
         check_in: checkIn,
         check_out: checkOut,
+
+        //stripe status
         status: "confirmed",
         payment_status: "completed",
       };
