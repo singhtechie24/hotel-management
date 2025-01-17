@@ -63,7 +63,7 @@ export const BookRoomScreen = ({ route, navigation }: any) => {
       await db.collection("bookings").add(booking);
 
       Alert.alert("Success", "Room booked successfully!");
-      navigation.navigate("RoomList");
+      navigation.goBack();
     } catch (error: any) {
       Alert.alert("Error", error.message);
     } finally {

@@ -9,13 +9,19 @@ import { StaffDashboardScreen } from "./src/screens/staff/StaffDashboardScreen";
 import { AdminDashboardScreen } from "./src/screens/admin/AdminDashboardScreen";
 import { CustomerTabs } from "./src/navigation/CustomerTabs";
 import { LogoutButton } from "./src/components/LogoutButton";
+import { RoomListScreen } from "./src/screens/customer/RoomListScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="RoomList">
+        <Stack.Screen
+          name="RoomList"
+          component={RoomListScreen}
+          options={{ title: "Available Rooms" }}
+        />
         <Stack.Screen
           name="Login"
           component={LoginScreen}

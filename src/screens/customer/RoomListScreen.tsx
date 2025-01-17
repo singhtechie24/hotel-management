@@ -7,6 +7,8 @@ import { Room, Booking } from "../../types";
 export const RoomListScreen = ({ navigation }: any) => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [userBooking, setUserBooking] = useState<Booking | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const db = {
     collection: (name: string) => ({
       get: async () => {
@@ -35,37 +37,52 @@ export const RoomListScreen = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    const fetchRooms = async () => {
-      try {
-        const snapshot = await db.collection("rooms").get();
-        const roomList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setRooms(roomList);
-
-        // Get current user's booking
-        const user = (await supabase.auth.getUser()).data.user;
-        if (user) {
-          const booking = await db
-            .collection("bookings")
-            .where("user_id", "==", user.id);
-          setUserBooking(booking);
-        }
-      } catch (error) {
-        console.error("Error fetching rooms:", error);
-      }
-    };
-
     fetchRooms();
+    checkAuthStatus();
   }, []);
 
-  const handleBookRoom = (room: Room) => {
-    navigation.navigate("BookRoom", { room });
+  const checkAuthStatus = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    setIsLoggedIn(!!user);
   };
 
-  const handleComplaint = () => {
-    navigation.navigate("Complaint");
+  const fetchRooms = async () => {
+    try {
+      const snapshot = await db.collection("rooms").get();
+      const roomList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRooms(roomList);
+
+      // Get current user's booking if logged in
+      const user = (await supabase.auth.getUser()).data.user;
+      if (user) {
+        const booking = await db
+          .collection("bookings")
+          .where("user_id", "==", user.id);
+        setUserBooking(booking);
+      }
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+    }
+  };
+
+  const handleBookRoom = async (room: Room) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      navigation.navigate("Login", { returnTo: "BookRoom", room });
+    } else {
+      navigation.navigate("BookRoom", { room });
+    }
+  };
+
+  const handleLogin = () => {
+    navigation.navigate("Login");
   };
 
   const getStatusColor = (status: Room["status"]) => {
@@ -111,8 +128,13 @@ export const RoomListScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Card containerStyle={styles.myRoomCard}>
-        <Card.Title>Room List</Card.Title>
+      <Card containerStyle={styles.headerCard}>
+        <View style={styles.headerContent}>
+          <Text h4>Available Rooms</Text>
+          {!isLoggedIn && (
+            <Button title="Login" type="clear" onPress={handleLogin} />
+          )}
+        </View>
       </Card>
 
       <FlatList
@@ -141,8 +163,13 @@ const styles = StyleSheet.create({
   badge: {
     marginBottom: 10,
   },
-  myRoomCard: {
+  headerCard: {
     marginBottom: 15,
     backgroundColor: "#e8f4f8",
+  },
+  headerContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
