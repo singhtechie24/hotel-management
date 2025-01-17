@@ -5,16 +5,14 @@
     "version": "1.0.0",
     "sdkVersion": "50.0.0",
     "platforms": ["ios", "android", "web"],
-    "extra": {
-      "eas": {
-        "projectId": "0d17d25c-adb7-4c90-88c9-01295ac7af8e"
-      }
-    },
     "android": {
       "package": "com.tarinxyz.hotelmanagementapp"
     },
-    "developer": {
-      "console": {
+    "extra": {
+      "eas": {
+        "projectId": "0d17d25c-adb7-4c90-88c9-01295ac7af8e"
+      },
+      "developerConfig": {
         "disableYellowBox": true,
         "ignoredWarnings": ["Warning: ", "Require cycle:"]
       }
@@ -25,6 +23,13 @@
           "file": "./scripts/remove-console-logs.js"
         }
       ]
-    }
+    },
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"]
   }
 }
